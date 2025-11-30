@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <!-- SEO Meta Tags -->
+    <title>Sổ Công Quá Cách - Ứng dụng Tu Tâm Dưỡng Tính với AI</title>
+    <meta name="description" content="Ghi nhật ký tu tập, chấm điểm công quá theo Phật giáo và Nho giáo. AI phân tích và đánh giá hành động thiện ác mỗi ngày. Miễn phí 100%.">
+    <meta name="keywords" content="sổ công quá cách, tu tâm, phật giáo, nho giáo, nhật ký tu tập, công đức, thiện ác, AI phân tích">
+    <meta name="author" content="Sổ Công Quá Cách">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://congqua.netlify.app/">
+    <meta property="og:title" content="Sổ Công Quá Cách - Tu Tâm Dưỡng Tính với AI">
+    <meta property="og:description" content="Ghi nhật ký tu tập hàng ngày, AI phân tích công quá theo chuẩn Phật giáo và Nho giáo. Hoàn toàn miễn phí!">
+    <meta property="og:image" content="https://congqua.netlify.app/preview.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://congqua.netlify.app/">
+    <meta property="twitter:title" content="Sổ Công Quá Cách - Tu Tâm với AI">
+    <meta property="twitter:description" content="Ứng dụng tu tâm dưỡng tính thông minh với AI">
+    <meta property="twitter:image" content="https://congqua.netlify.app/preview.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪷</text></svg>">
+    
+    <!-- Rest of head... -->
+	<link rel="manifest" href="/manifest.json">
+
+	<!-- Favicon Package -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪷</text></svg>">
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪷</text></svg>">
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪷</text></svg>">
+<link rel="icon" type="image/png" sizes="16x16" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪷</text></svg>">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="msapplication-TileColor" content="#667eea">
+<meta name="theme-color" content="#667eea">
+
+    <title>🪷 Sổ Công Quá Cách AI</title>
+    <link rel="stylesheet" href="style.css">
+	  <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+
+
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="authSection" class="auth-section">
+        <div class="login-container">
+            <div class="logo">
+                <div class="lotus">🪷</div>
+                <h1>Sổ Công Quá Cách AI</h1>
+                <p class="tagline">AI phân tích hành động • Tự động chấm điểm công đức</p>
+                <p class="dharma-quote">"Các con hãy tự thắp đuốc lên mà đi"<br><span>— Đức Phật</span></p>
+            </div>
+            <button id="loginBtn" class="btn-login">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="22">
+                Đăng nhập với Google
+            </button>
+        </div>
+    </div>
+
+    <!-- App Screen -->
+    <div id="appSection" class="app-section hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <img id="userAvatar" class="avatar">
+                <div class="user-info">
+                    <h3 id="userName"></h3>
+                    <div class="stats-inline">
+                        <span class="badge" id="rankBadge">🌱 Tu Sinh</span>
+                        <span class="points-badge" id="pointsBadge">0 điểm</span>
+                    </div>
+                </div>
+            </div>
+            <button id="logoutBtn" class="btn-icon">🚪</button>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Today's Entry Form -->
+            <section class="entry-section">
+                <div class="section-header">
+                    <h2>📝 Nhật ký hôm nay</h2>
+                    <span class="today-date" id="todayDate"></span>
+                </div>
+                
+                <div class="entry-card">
+                    <textarea 
+                        id="diaryInput" 
+                        class="diary-textarea" 
+                        placeholder="Hãy ghi lại những điều bạn đã làm hôm nay...
+
+Ví dụ:
+• Sáng nay tôi dậy sớm thiền 30 phút
+• Giúp mẹ nấu cơm và dọn nhà
+• Có lúc nóng giận với em trai
+• Chiều tham gia từ thiện phát cơm
+• Tối học kinh Pháp Cú 1 giờ"
+                        rows="8"></textarea>
+                    
+                    <div class="action-buttons">
+                        <button id="analyzeBtn" class="btn-primary">
+                            <span>🤖</span>
+                            <span>AI Phân tích & Chấm điểm</span>
+                        </button>
+                    </div>
+
+                    <!-- Loading indicator -->
+                    <div id="loadingIndicator" class="loading hidden">
+                        <div class="spinner"></div>
+                        <p>AI đang phân tích nhật ký của bạn...</p>
+                    </div>
+
+                    <!-- Analysis Result -->
+                    <div id="analysisResult" class="analysis-result hidden">
+                        <div class="result-header">
+                            <h3>📊 Kết quả phân tích</h3>
+                            <div class="score-display">
+                                <span class="score-label">Điểm hôm nay:</span>
+                                <span id="todayScore" class="score-value">+0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-section">
+                            <h4>✅ Công đức (Việc thiện)</h4>
+                            <div id="goodActions" class="actions-list"></div>
+                        </div>
+
+                        <div class="breakdown-section bad">
+                            <h4>⚠️ Quá lỗi (Việc ác)</h4>
+                            <div id="badActions" class="actions-list"></div>
+                        </div>
+
+                        <div class="ai-insight">
+                            <h4>💡 Lời khuyên từ AI</h4>
+                            <p id="aiAdvice"></p>
+                        </div>
+
+                        <button id="saveEntryBtn" class="btn-save">💾 Lưu vào sổ</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History Section -->
+            <section class="history-section">
+                <div class="section-header">
+                    <h2>📚 Lịch sử gần đây</h2>
+                    <div class="summary-stats">
+                        <span class="stat-item">
+                            <span class="stat-icon">⚡</span>
+                            <span id="totalPoints">0</span>
+                        </span>
+                        <span class="stat-item">
+                            <span class="stat-icon">🔥</span>
+                            <span id="streak">0 ngày</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div id="historyList" class="history-list">
+                    <div class="empty-state">
+                        <p>📝 Chưa có nhật ký nào. Hãy bắt đầu ghi chép!</p>
+                    </div>
+                </div>
+            </section>
+
+<!-- Statistics Section -->
+<section class="stats-section">
+    <h3>📊 Thống kê chi tiết</h3>
+    <div class="detailed-stats">
+        <!-- Sẽ được render bởi JS -->
+    </div>
+</section>
+
+<!-- Progress Chart Section -->
+<section class="chart-section">
+    <h3>📈 Biểu đồ tiến triển</h3>
+    <div class="chart-controls">
+        <button class="chart-btn active" data-period="7">7 ngày</button>
+        <button class="chart-btn" data-period="30">30 ngày</button>
+        <button class="chart-btn" data-period="90">3 tháng</button>
+    </div>
+    <div class="chart-container">
+        <canvas id="progressChart"></canvas>
+    </div>
+</section>
+
+
+            <!-- Rank Progress -->
+<section class="rank-section">
+    <h3>🏆 Hệ thống vinh danh</h3>
+    
+    <!-- Current Rank Showcase -->
+    <div class="current-rank-showcase"></div>
+    
+    <!-- Streak Display -->
+    <div class="streak-showcase" style="background: linear-gradient(135deg, #FF6B6B, #FF8E53); color: white; padding: 20px; border-radius: 15px; margin: 20px 0; text-align: center;">
+        <span style="font-size: 2rem;">🔥</span>
+        <span id="streakNumber" style="font-size: 3rem; font-weight: 800; display: block;">0</span>
+        <span style="font-size: 1.2rem;">ngày liên tiếp</span>
+    </div>
+    
+    <!-- Progress -->
+    <div class="rank-progress">
+        <h3>📈 Tiến độ lên hạng</h3>
+        <div class="progress-bar" style="height: 30px; background: #f0f0f0; border-radius: 15px; overflow: hidden;">
+            <div id="rankProgress" class="progress-fill" style="height: 100%; background: linear-gradient(90deg, #667eea, #764ba2); width: 0%; transition: width 1s;"></div>
+        </div>
+        <p id="rankProgressText" style="text-align: center; margin-top: 10px; color: #666;"></p>
+    </div>
+    
+    <!-- All Ranks Grid -->
+    <h3 style="margin-top: 30px;">🎖️ Tất cả cấp bậc</h3>
+    <div class="ranks-grid"></div>
+</section>
+<!-- Achievements Section -->
+<section class="achievements-section">
+    <h3>🏆 Thành tựu</h3>
+    <div class="achievements-grid" id="achievementsGrid">
+        <!-- Rendered by JS -->
+    </div>
+</section>
+
+<!-- Data Management Section -->
+<section class="data-section">
+    <h3>⚙️ Quản lý dữ liệu</h3>
+    <p class="data-section-desc">Xuất, tính lại hoặc xóa dữ liệu tài khoản của bạn</p>
+    
+    <div class="data-actions">
+        <button class="btn-data export" onclick="exportData()">
+            <span class="btn-icon-large">📤</span>
+            <span class="btn-text">
+                <strong>Xuất dữ liệu</strong>
+                <small>Tải về file JSON</small>
+            </span>
+        </button>
+        
+        <button class="btn-data recalc" onclick="recalculatePoints()">
+            <span class="btn-icon-large">🔄</span>
+            <span class="btn-text">
+                <strong>Tính lại điểm</strong>
+                <small>Cập nhật từ nhật ký</small>
+            </span>
+        </button>
+        
+        <button class="btn-data danger" onclick="deleteAllData()">
+            <span class="btn-icon-large">🗑️</span>
+            <span class="btn-text">
+                <strong>Xóa tất cả</strong>
+                <small>Reset tài khoản</small>
+            </span>
+        </button>
+    </div>
+    
+    <div class="data-info">
+        <p>💡 <strong>Mẹo:</strong> Để xóa từng nhật ký riêng lẻ, hãy click vào nhật ký trong phần "Lịch sử gần đây" và chọn nút "Xóa nhật ký này".</p>
+    </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="app-footer">
+    <div class="footer-quote" id="footerQuote">
+        <p class="quote-text">"Giọt nước tuy nhỏ, lâu ngày đầy bình. Người trí tích thiện, lần lần viên mãn."</p>
+        <span class="quote-source">— Kinh Pháp Cú, kệ 122</span>
+    </div>
+    <div class="footer-links">
+        <span>🪷 Sổ Công Quá Cách AI</span>
+        <span>•</span>
+        <span>Tu tâm dưỡng tính mỗi ngày</span>
+    </div>
+</footer>
+
+        </main>
+    </div>
+
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+<!-- App Scripts -->
+<script src="ai-analyzer.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

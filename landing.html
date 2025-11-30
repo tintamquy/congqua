@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Sổ Công Quá Cách - Ứng Dụng Tu Tâm Dưỡng Tính với AI</title>
+    <meta name="description" content="Ghi nhật ký tu tập hàng ngày, AI phân tích và chấm điểm công quá theo Phật giáo & Nho giáo. Miễn phí 100%. Giúp bạn tu tâm dưỡng tính mỗi ngày.">
+    <meta name="keywords" content="sổ công quá cách, tu tâm, phật giáo, nho giáo, nhật ký tu tập, công đức, thiện ác, AI">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://congqua.pages.dev/">
+    <meta property="og:title" content="Sổ Công Quá Cách - Tu Tâm với AI">
+    <meta property="og:description" content="Ứng dụng tu tâm dưỡng tính thông minh. Ghi nhật ký, AI phân tích công quá theo chuẩn Phật giáo & Nho giáo. Hoàn toàn miễn phí!">
+    <meta property="og:image" content="https://congqua.pages.dev/preview.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪷</text></svg>">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .hero-icon {
+            font-size: 6rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+            opacity: 0.95;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: #667eea;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 20px;
+            background: #f9fafb;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+        
+        .feature-card p {
+            color: #6b7280;
+            line-height: 1.8;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .step {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+        
+        .step h3 {
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .testimonial-card {
+            background: #f9fafb;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 40px 20px;
+            background: #1f2937;
+            color: white;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-icon">🪷</div>
+        <h1>Sổ Công Quá Cách</h1>
+        <p>Ứng dụng tu tâm dưỡng tính thông minh với AI. Ghi nhật ký hàng ngày, AI phân tích và chấm điểm công quá theo chuẩn Phật giáo & Nho giáo.</p>
+        <a href="index.html" class="cta-button">🚀 Bắt đầu ngay - Miễn phí</a>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">✨ Tính Năng Nổi Bật</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Thông Minh</h3>
+                    <p>Sử dụng Google Gemini AI để phân tích nhật ký của bạn theo chuẩn Công Quá Cách truyền thống. Chính xác và nhất quán.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Chấm Điểm Chi Tiết</h3>
+                    <p>Phân loại rõ ràng việc thiện (công) và việc ác (quá), gợi ý cải thiện cụ thể cho từng hành động.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Hệ Thống Cấp Bậc</h3>
+                    <p>18 cấp bậc tu tập từ "Người Mới" đến "Bồ Tát". Theo dõi tiến trình tu tâm dưỡng tính của bạn.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔥</div>
+                    <h3>Streak & Động Lực</h3>
+                    <p>Ghi nhật ký liên tục mỗi ngày để duy trì streak. Nhận thưởng khi kiên trì tu tập.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Biểu Đồ Tiến Triển</h3>
+                    <p>Xem biểu đồ điểm số theo ngày, tuần, tháng. Nhìn thấy sự tiến bộ rõ ràng.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Bảo Mật & Riêng Tư</h3>
+                    <p>Dữ liệu của bạn được lưu trữ an toàn trên Firebase. Chỉ bạn mới truy cập được.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">📖 Cách Sử Dụng</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Đăng Nhập</h3>
+                    <p>Đăng nhập bằng tài khoản Google. Nhanh chóng và an toàn.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Viết Nhật Ký</h3>
+                    <p>Ghi lại những gì bạn đã làm trong ngày. Cả việc tốt lẫn việc chưa tốt.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>AI Phân Tích</h3>
+                    <p>AI sẽ phân tích và chấm điểm theo 17 nhóm trong Công Quá Cách.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Nhận Lời Khuyên</h3>
+                    <p>Xem kết quả, lời khuyên và theo dõi tiến trình tu tâm của bạn.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">💬 Người Dùng Nói Gì</h2>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text">"App tuyệt vời! Giúp tôi nhận ra những điều tốt và chưa tốt trong ngày. Từ khi dùng, tôi cố gắng làm nhiều việc thiện hơn."</p>
+                <p class="testimonial-author">- Anh Minh, 35 tuổi</p>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text">"AI chấm điểm rất chính xác và công bằng. Tôi thích hệ thống cấp bậc, tạo động lực tu tập mỗi ngày."</p>
+                <p class="testimonial-author">- Chị Hương, 42 tuổi</p>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Ứng dụng đơn giản, dễ dùng. Phù hợp với cả người mới bắt đầu tu tập. Cảm ơn nhà phát triển!"</p>
+                <p class="testimonial-author">- Thầy Tuệ Quang</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Sẵn Sàng Bắt Đầu Tu Tâm?</h2>
+            <p>Hoàn toàn miễn phí. Không cần thẻ tín dụng.</p>
+            <a href="index.html" class="cta-button">🪷 Bắt Đầu Ngay</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Sổ Công Quá Cách. Phát triển với ❤️ để giúp mọi người tu tâm dưỡng tính.</p>
+            <p>Liên hệ: <a href="mailto:caoquy120324@gmail.com">caoquy120324@gmail.com</a></p>
+        </div>
+    </footer>
+
+    <!-- Analytics (Optional) -->
+    <!-- Google Analytics code here -->
+</body>
+</html>

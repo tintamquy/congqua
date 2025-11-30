@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags (user không thấy, chỉ Google thấy) -->
+    <title>🪷 Công Quá Cách - Nhật Ký Nhìn Lại Mình Mỗi Ngày</title>
+    <meta name="description" content="Ghi nhật ký nhìn lại mình mỗi ngày, AI tự động chấm điểm. Phân tích miễn phí, theo dõi tiến bộ. Bắt đầu ngay không cần đăng ký.">
+    <meta name="keywords" content="nhật ký nhìn lại mình, công quá cách, AI phân tích, thay đổi bản thân, tu tâm, phát triển cá nhân">
+    <meta name="author" content="Công Quá Cách">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://congqua.pages.dev/">
+    
+    <!-- Open Graph (Facebook/Zalo Share) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://congqua.pages.dev/">
+    <meta property="og:title" content="🪷 Công Quá Cách - Nhật Ký Nhìn Lại Mình">
+    <meta property="og:description" content="Ghi nhật ký mỗi ngày, AI phân tích tự động. Hàng nghìn người đã thay đổi cuộc sống. Miễn phí trải nghiệm ngay!">
+    <meta property="og:image" content="https://congqua.pages.dev/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+	    <meta property="og:site_name" content="Công Quá Cách">
+    <meta property="og:locale" content="vi_VN">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://congqua.pages.dev/">
+    <meta name="twitter:title" content="🪷 Công Quá Cách - AI Chấm Điểm Nhật Ký">
+    <meta name="twitter:description" content="Ghi nhật ký, AI phân tích. Thay đổi cuộc sống. Miễn phí!">
+    <meta name="twitter:image" content="https://congqua.pages.dev/og-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪷</text></svg>">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Loading Animation */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        #authCheckLoading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            animation: fadeIn 0.3s ease;
+        }
+        #authCheckLoading .lotus {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        #authCheckLoading p {
+            font-size: 1.2rem;
+            color: white;
+            font-weight: 500;
+        }
+        
+        /* Footer Text - Subtle, không chiếm spotlight */
+        .footer-info {
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+            margin: 40px auto 20px;
+            padding: 20px;
+            max-width: 700px;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        .footer-info p {
+            margin: 10px 0;
+        }
+        .footer-info a {
+            color: rgba(255,255,255,0.95);
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        .footer-info a:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="authCheckLoading">
+        <div style="text-align: center;">
+            <div class="lotus">🪷</div>
+            <p>Đang kiểm tra trạng thái...</p>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="mainApp" style="display: none;">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <div style="font-size: 2rem;">🪷</div>
+                <div class="user-info">
+                    <h3>Công Quá Cách</h3>
+                    <div class="stats-inline">
+                        <span class="points-badge">🏆 <span id="totalPoints">0</span> điểm</span>
+                        <span class="badge" id="rankBadge">🌱 Mới Bắt Đầu</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="btn-icon" onclick="window.location.href='app.html'" title="Đăng nhập để lưu">🔐</button>
+            </div>
+        </div>
+
+        <!-- Main Content - FOCUS CHÍNH Ở ĐÂY -->
+        <div class="main-content">
+            <div class="section-header">
+                <h2>📝 Nhật Ký Nhìn Lại Mình</h2>
+                <span class="today-date" id="todayDate">Hôm nay</span>
+            </div>
+
+            <!-- TEXTAREA TO, NỔI BẬT NHẤT -->
+            <div class="entry-card">
+                <textarea 
+                    id="diaryInput" 
+                    class="diary-textarea"
+                    placeholder="Hôm nay bạn đã làm gì? Viết xuống để AI phân tích...
+
+Ví dụ:
+- Sáng dậy sớm, tập thể dục 30 phút
+- Giúp bạn làm bài tập, chia sẻ kiến thức
+- Cho người nghèo 20k, mua cơm từ thiện
+- Kiên nhẫn lắng nghe bố mẹ, không cãi lại
+- Học bài chăm chỉ 2 tiếng
+- Tối đọc sách phát triển bản thân
+
+AI sẽ phân tích chi tiết!"></textarea>
+                
+                <div class="action-buttons">
+                    <button id="analyzeBtn" class="btn-primary">
+                        <span>🤖</span>
+                        <span>AI Phân Tích & Chấm Điểm</span>
+                    </button>
+                </div>
+
+                <div id="loadingIndicator" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p>AI đang phân tích nhật ký của bạn...</p>
+                </div>
+
+                <div id="analysisResult" class="analysis-result hidden">
+                    <div class="result-header">
+                        <h3>📊 Kết Quả Phân Tích</h3>
+                        <div class="score-display">
+                            <span>Điểm:</span>
+                            <span id="todayScore" class="score-value">0</span>
+                        </div>
+                    </div>
+
+                    <div class="breakdown-section">
+                        <h4>✅ Điều Tốt (Công Đức)</h4>
+                        <div id="goodActions" class="actions-list"></div>
+                    </div>
+
+                    <div class="breakdown-section">
+                        <h4>❌ Cần Cải Thiện (Quá Lỗi)</h4>
+                        <div id="badActions" class="actions-list"></div>
+                    </div>
+
+                    <div class="ai-insight">
+                        <h4>💡 Lời Khuyên</h4>
+                        <p id="aiAdvice">Tiếp tục giữ những thói quen tốt!</p>
+                    </div>
+
+                    <button id="saveBtn" class="btn-save">
+                        💾 Đăng Nhập Để Lưu & Theo Dõi Tiến Bộ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Footer Text - Subtle, không nổi bật -->
+            <div class="footer-info">
+                <p>
+                    📖 <strong>Công Quá Cách</strong> là phương pháp ghi nhật ký cổ truyền, giúp nhìn lại mình mỗi ngày. 
+                    AI phân tích tự động theo nguyên tắc Phật giáo & Nho giáo, chấm điểm theo các nguyên tắc đánh giá của trí tuệ cổ nhân. 
+                    Hàng triệu người trong đã thay đổi cuộc sống nhờ phương pháp cổ xưa này.
+                </p>
+                <p style="margin-top: 15px;">
+                    <a href="app.html">→ Đăng nhập để lưu và theo dõi tiến bộ lâu dài</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="ai-analyzer.js"></script>
+
+    <script>
+        console.log('🪷 Homepage Final - Clean & Focused!');
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCPLUsJ-bbKRCeNS2hMpLcON3wz9iYLqw0",
+            authDomain: "congquacach-ed087.firebaseapp.com",
+            projectId: "congquacach-ed087",
+            storageBucket: "congquacach-ed087.firebasestorage.app",
+            messagingSenderId: "895889020313",
+            appId: "1:895889020313:web:de65e81b0df3f7782cef08",
+            measurementId: "G-Z6CFF22EBM"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                window.location.href = 'app.html';
+            } else {
+                document.getElementById('authCheckLoading').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
+                initExplorePage();
+            }
+        });
+
+        function initExplorePage() {
+            const GEMINI_API_KEY = "AIzaSyCqTk4lLdPBR07Q233BgXx9vO8Ozf9U4RU";
+            const aiAnalyzer = new CongQuaCachAI(GEMINI_API_KEY);
+            
+            let stats = { totalPoints: 0, rank: 'moi_tu_tap' };
+            const RANKS = [
+                { id: 'moi_tu_tap', name: '🌱 Mới Bắt Đầu', min: 0 },
+                { id: 'xay_dung_thoi_quen', name: '🌿 Xây Dựng', min: 100 },
+                { id: 'tu_than_co_ban', name: '🌳 Tu Thân', min: 300 },
+                { id: 'hanh_thien_tich_cuc', name: '🌲 Hành Thiện', min: 600 },
+                { id: 'kien_dinh_dao_duc', name: '⛰️ Kiên Định', min: 1000 }
+            ];
+
+            function loadStats() {
+                const saved = localStorage.getItem('khamphaStats');
+                if (saved) stats = JSON.parse(saved);
+                updateStatsUI();
+            }
+
+            function updateStatsUI() {
+                document.getElementById('totalPoints').textContent = stats.totalPoints;
+                const currentRank = RANKS.find(r => r.id === stats.rank) || RANKS[0];
+                document.getElementById('rankBadge').textContent = currentRank.name;
+            }
+
+            function updateStats(score) {
+                stats.totalPoints += score;
+                for (let i = RANKS.length - 1; i >= 0; i--) {
+                    if (stats.totalPoints >= RANKS[i].min) {
+                        stats.rank = RANKS[i].id;
+                        break;
+                    }
+                }
+                localStorage.setItem('khamphaStats', JSON.stringify(stats));
+                updateStatsUI();
+            }
+
+            document.getElementById('todayDate').textContent = new Date().toLocaleDateString('vi-VN', { 
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+            });
+
+            document.getElementById('analyzeBtn').addEventListener('click', async () => {
+                const text = document.getElementById('diaryInput').value.trim();
+                if (!text || text.length < 20) {
+                    alert('📝 Vui lòng viết nhật ký chi tiết hơn (tối thiểu 20 ký tự)!');
+                    return;
+                }
+
+                const loading = document.getElementById('loadingIndicator');
+                const result = document.getElementById('analysisResult');
+                const btn = document.getElementById('analyzeBtn');
+                loading.classList.remove('hidden');
+                result.classList.add('hidden');
+                btn.disabled = true;
+
+                try {
+                    const analysis = await aiAnalyzer.analyzeDiary(text);
+                    displayAnalysis(analysis);
+                    updateStats(analysis.total_score || 0);
+                    loading.classList.add('hidden');
+                } catch (error) {
+                    console.error('AI Error:', error);
+                    alert('❌ Lỗi phân tích: ' + (error.message || 'Thử lại sau!'));
+                    loading.classList.add('hidden');
+                } finally {
+                    btn.disabled = false;
+                }
+            });
+
+            function displayAnalysis(analysis) {
+                const score = analysis.total_score || 0;
+                const scoreEl = document.getElementById('todayScore');
+                scoreEl.textContent = (score >= 0 ? '+' : '') + score;
+                scoreEl.className = `score-value ${score >= 0 ? 'positive' : 'negative'}`;
+
+                const goodEl = document.getElementById('goodActions');
+                if (analysis.good_actions && analysis.good_actions.length > 0) {
+                    goodEl.innerHTML = analysis.good_actions.map(action => `
+                        <div class="action-item good">
+                            <div class="action-info">
+                                <strong>${action.action}</strong>
+                                <p>${action.explanation || ''} ${action.category ? '• ' + action.category : ''}</p>
+                            </div>
+                            <div class="action-points positive">+${action.points}</div>
+                        </div>
+                    `).join('');
+                } else {
+                    goodEl.innerHTML = '<p class="empty-state">Chưa có điều tốt nào được ghi nhận hôm nay.</p>';
+                }
+
+                const badEl = document.getElementById('badActions');
+                if (analysis.bad_actions && analysis.bad_actions.length > 0) {
+                    badEl.innerHTML = analysis.bad_actions.map(action => `
+                        <div class="action-item bad">
+                            <div class="action-info">
+                                <strong>${action.action}</strong>
+                                <p>${action.explanation || ''} ${action.category ? '• ' + action.category : ''}</p>
+                            </div>
+                            <div class="action-points negative">${action.points}</div>
+                        </div>
+                    `).join('');
+                } else {
+                    badEl.innerHTML = '<p class="empty-state" style="color: var(--success);">🎉 Không có gì cần cải thiện - Tuyệt vời!</p>';
+                }
+
+                document.getElementById('aiAdvice').textContent = analysis.advice || 'Tiếp tục giữ những thói quen tốt mỗi ngày!';
+                document.getElementById('analysisResult').classList.remove('hidden');
+            }
+
+            document.getElementById('saveBtn').addEventListener('click', () => {
+                if (confirm('Để lưu nhật ký vĩnh viễn & theo dõi tiến bộ, cần đăng nhập với Gmail. Tiếp tục?')) {
+                    window.location.href = 'app.html';
+                }
+            });
+
+            loadStats();
+        }
+    </script>
+</body>
+</html>
