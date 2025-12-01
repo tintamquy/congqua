@@ -1,8 +1,9 @@
 // ===== CÔNG QUÁ CÁCH AI ANALYZER - PROMPT THÔNG MINH =====
 class CongQuaCachAI {
-    constructor(apiKey) {
-        this.apiKey = apiKey;
-        this.apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
+    constructor(options = {}) {
+        this.directApiKey = options.apiKey || null;
+        this.directApiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
+        this.proxyEndpoint = options.proxyEndpoint || '/api/gemini';
         
         // Link Google Sheets công khai chứa bảng điểm đầy đủ
         this.fullScoringTableUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTExwxJQZbZskzJ7J0Yy_2tRu9bTkocJVhvd7H1-FRwzH2F9RMySbi5sg2Ei5cBKA/pubhtml';
@@ -12,26 +13,14 @@ class CongQuaCachAI {
         const prompt = this.buildSmartPrompt(diaryText);
         
         try {
-            const response = await fetch(`${this.apiUrl}?key=${this.apiKey}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: prompt }] }],
-                    generationConfig: {
-                        temperature: 0,      // Loại bỏ ngẫu nhiên
-                        topK: 1,
-                        topP: 1,
-                        maxOutputTokens: 2048
-                    }
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`API Error: ${response.status}`);
+            const data = this.directApiKey
+                ? await this.callGeminiDirect(prompt)
+                : await this.callGeminiViaProxy(prompt);
+            
+            const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (!rawText) {
+                throw new Error('Invalid response from AI');
             }
-
-            const data = await response.json();
-            const rawText = data.candidates[0].content.parts[0].text;
             
             // Parse JSON từ response
             const jsonMatch = rawText.match(/\{[\s\S]*\}/);
@@ -48,6 +37,43 @@ class CongQuaCachAI {
             console.error('AI Analysis Error:', error);
             throw new Error('Không thể phân tích nhật ký. Vui lòng thử lại.');
         }
+    }
+
+    async callGeminiViaProxy(prompt) {
+        const response = await fetch(this.proxyEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt })
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`API Error: ${response.status} ${errorText}`);
+        }
+
+        return response.json();
+    }
+
+    async callGeminiDirect(prompt) {
+        const response = await fetch(`${this.directApiUrl}?key=${this.directApiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: {
+                    temperature: 0,
+                    topK: 1,
+                    topP: 1,
+                    maxOutputTokens: 2048
+                }
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`API Error: ${response.status}`);
+        }
+
+        return response.json();
     }
 
     buildSmartPrompt(diaryText) {

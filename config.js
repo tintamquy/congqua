@@ -10,12 +10,7 @@
     measurementId: "G-Z6CFF22EBM"
   };
 
-// Gemini API Key
-// Lấy từ aistudio.google.com/apikey
-const GEMINI_API_KEY = "AIzaSyCqTk4lLdPBR07Q233BgXx9vO8Ozf9U4RU"; // Thay bằng Gemini API Key
-
 // Export để dùng trong các file khác
 window.CONFIG = {
-    firebase: firebaseConfig,
-    gemini: GEMINI_API_KEY
+    firebase: firebaseConfig
 };

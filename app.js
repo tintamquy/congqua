@@ -9,15 +9,13 @@ const firebaseConfig = {
     measurementId: "G-Z6CFF22EBM"
 };
 
-const GEMINI_API_KEY = "AIzaSyCqTk4lLdPBR07Q233BgXx9vO8Ozf9U4RU";
-
 // ===== INITIALIZE FIREBASE =====
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
 // ===== INITIALIZE AI ANALYZER =====
-const aiAnalyzer = new CongQuaCachAI(GEMINI_API_KEY);
+const aiAnalyzer = new CongQuaCachAI();
 
 // ===== APPLICATION STATE =====
 let currentUser = null;

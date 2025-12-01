@@ -228,8 +228,7 @@ AI sẽ phân tích chi tiết!"></textarea>
         });
 
         function initExplorePage() {
-            const GEMINI_API_KEY = "AIzaSyCqTk4lLdPBR07Q233BgXx9vO8Ozf9U4RU";
-            const aiAnalyzer = new CongQuaCachAI(GEMINI_API_KEY);
+            const aiAnalyzer = new CongQuaCachAI();
             
             let stats = { totalPoints: 0, rank: 'moi_tu_tap' };
             const RANKS = [
